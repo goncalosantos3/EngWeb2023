@@ -1,0 +1,29 @@
+
+header{
+    text-align: center;
+}
+
+header a{
+    padding: 5px;
+    text-decoration: none;
+}
+
+header a:hover{
+    background-color: gray;
+}
+
+.indice{
+    font-size: 20px;
+}
+
+.lista{
+    list-style-type: none;
+}
+
+.lista a{
+    text-decoration: none;
+}
+
+.lista a:hover{
+    color: black;
+}
