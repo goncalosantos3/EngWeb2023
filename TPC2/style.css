@@ -20,6 +20,10 @@ header a:hover{
     list-style-type: none;
 }
 
+.lista li{
+    padding: 10px;
+}
+
 .lista a{
     text-decoration: none;
 }

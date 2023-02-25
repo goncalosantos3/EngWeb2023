@@ -7,6 +7,7 @@ def ordCidade(c):
 f = open("../../praticas/p1/mapa.json")
 mapa = json.load(f)
 cidades = mapa['cidades']
+ligacoes = mapa['ligações']
 
 cidades.sort(key = ordCidade)
 
@@ -31,7 +32,7 @@ for c in cidades:
     fcidade = open(f"{c['id']}.html", "w")
     html += f"""
                 <li>
-                    <a href="{c['id']}.html">{c['nome']}</a>
+                    <a href="{c['id']}">{c['nome']}</a>
                 </li>
     """
 
@@ -46,7 +47,7 @@ for c in cidades:
     <body>
         <header>
             <h1>Cidade: {c['nome']}</h1>
-            <a href="index.html">Voltar atrás</a>
+            <a href="../">Voltar atrás</a>
         </header>
         <h2>Informações</h2>
         <div class="informacao">
@@ -61,7 +62,23 @@ for c in cidades:
         <hr/>
         <h2>Ligações</h2>
         <div class="ligacoes">
-            <p>Falta implementar isto!</p>
+            <ul>"""
+                
+    for l in ligacoes:
+        if l['origem'] == c['id'] or l['destino'] == c['id']:
+            htmlCidade += f"""
+                <li>
+                    <dl>
+                        <dt>Id</dt><dd>{l['id']}</dd>
+                        <dt>Origem</dt><dd>{l['origem']}</dd>
+                        <dt>Destino</dt><dd>{l['destino']}</dd>
+                        <dt>Distância</dt><dd>{l['distância']}</dd>
+                    </dl>
+                </li>
+            """
+
+    htmlCidade += f"""
+            </ul>
         </div>
     </body>
 </html>
