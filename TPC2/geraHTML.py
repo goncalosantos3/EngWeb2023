@@ -4,12 +4,22 @@ import json
 def ordCidade(c):
     return c['nome'] # A lista de dicionários (cidades) é ordenada pelo nome
 
+
 f = open("../../praticas/p1/mapa.json")
 mapa = json.load(f)
 cidades = mapa['cidades']
 ligacoes = mapa['ligações']
+dist = set()
 
 cidades.sort(key = ordCidade)
+
+# -> Ordenar os Distritos por ordem alfabeticas
+for c in cidades:
+    dist.add(c['distrito'])
+
+distritos = list(dist)
+distritos.sort()
+# .
 
 html = """
 <!DOCTYPE html>
@@ -28,15 +38,23 @@ html = """
         <div class="indice">
             <ul class="lista">"""
 
-for c in cidades:
-    fcidade = open(f"{c['id']}.html", "w")
+for d in distritos:
     html += f"""
+                <li>
+                    {d}
+                    <ul>
+    """
+
+    for c in cidades:
+        if c['distrito'] == d:
+            fcidade = open(f"{c['id']}.html", "w")
+            html += f"""
                 <li>
                     <a href="{c['id']}">{c['nome']}</a>
                 </li>
-    """
+            """
 
-    htmlCidade = f"""
+            htmlCidade = f"""
 <!DOCTYPE html>
 <html>
     <head>
@@ -64,9 +82,9 @@ for c in cidades:
         <div class="ligacoes">
             <ul>"""
                 
-    for l in ligacoes:
-        if l['origem'] == c['id'] or l['destino'] == c['id']:
-            htmlCidade += f"""
+            for l in ligacoes:
+                if l['origem'] == c['id'] or l['destino'] == c['id']:
+                    htmlCidade += f"""
                 <li>
                     <dl>
                         <dt>Id</dt><dd>{l['id']}</dd>
@@ -77,14 +95,20 @@ for c in cidades:
                 </li>
             """
 
-    htmlCidade += f"""
+            htmlCidade += f"""
             </ul>
         </div>
     </body>
 </html>
     """
-    fcidade.write(htmlCidade)
-    fcidade.close()
+            fcidade.write(htmlCidade)
+            fcidade.close()
+
+    html += f"""
+                </ul>
+            </li>
+    """
+
 
 html += """
             </ul>
