@@ -24,10 +24,10 @@ header a:hover{
     padding: 10px;
 }
 
-.lista a{
+a{
     text-decoration: none;
 }
 
-.lista a:hover{
+a:hover{
     color: black;
 }

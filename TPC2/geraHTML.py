@@ -8,6 +8,7 @@ def ordCidade(c):
 f = open("../../praticas/p1/mapa.json")
 mapa = json.load(f)
 cidades = mapa['cidades']
+idsCidades = {}
 ligacoes = mapa['ligações']
 dist = set()
 
@@ -15,6 +16,7 @@ cidades.sort(key = ordCidade)
 
 # -> Ordenar os Distritos por ordem alfabeticas
 for c in cidades:
+    idsCidades[c['id']] = c['nome']
     dist.add(c['distrito'])
 
 distritos = list(dist)
@@ -88,8 +90,8 @@ for d in distritos:
                 <li>
                     <dl>
                         <dt>Id</dt><dd>{l['id']}</dd>
-                        <dt>Origem</dt><dd>{l['origem']}</dd>
-                        <dt>Destino</dt><dd>{l['destino']}</dd>
+                        <dt>Origem</dt><dd><a href={l['origem']}>{idsCidades[l['origem']]}</a></dd>
+                        <dt>Destino</dt><dd><a href={l['destino']}>{idsCidades[l['destino']]}</a></dd>
                         <dt>Distância</dt><dd>{l['distância']}</dd>
                     </dl>
                 </li>
