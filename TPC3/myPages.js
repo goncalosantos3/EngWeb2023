@@ -133,6 +133,7 @@ exports.genSexDist = function(pessoas, data){
             <link rel="stylesheet" type="text/css" href="w3.css"/>
         </head>
         <body>
+            <h1>Distribuição por Sexo</h1>
             <table class="w3-table w3-striped">
                 <tr>
                     <th>Sexo</th>
@@ -151,9 +152,193 @@ exports.genSexDist = function(pessoas, data){
                     <td><a href="/pessoas/outro">${outro}</a></td>
                 </tr>
             </table>
+            <footer class="w3-container">
+                <h5>Generated in EngWeb2023 ${data}</h5>
+            </footer>
         </body>
     </html>
     `
     
+    return pagHTML
+}
+
+exports.genDespDist = function(pessoas, data){
+    var desportos = {}
+
+    for(let i = 0; i < pessoas.length; i++){
+        for(let j = 0; j < pessoas[i].desportos.length; j++){
+            if(pessoas[i].desportos[j] in desportos){
+                desportos[pessoas[i].desportos[j]] += 1
+            }else{
+                desportos[pessoas[i].desportos[j]] = 1
+            }
+        }
+    }
+
+    var pagHTML = ` 
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8"/>
+            <title>About Desportos</title>
+            <link rel="stylesheet" type="text/css" href="w3.css"/>
+        </head>
+        <body>
+            <div class="w3-card-4">
+                <header class="w3-container w3-purple">
+                    <h1>Distribuição por Desportos</h1>
+                </header>
+
+                <div class="w3-container">
+                    <table class="w3-table-all">
+                        <tr>
+                            <th>Desporto</th>
+                            <th>Quantidade</th>
+                        </tr>
+    `
+
+    for(var desporto in desportos){
+        pagHTML +=`
+                <tr>
+                    <td>${desporto}</td>
+                    <td><a href="/distDesporto/${desporto}">${desportos[desporto]}</a></td>
+                </tr>
+        `
+    } 
+
+    pagHTML += `
+                    </table>
+                </div>
+                <footer class="w3-container w3-blue">
+                    <h5>Generated in EngWeb2023 ${data}</h5>
+                </footer>
+            </div> 
+        </body>
+    </html>
+    `
+    return pagHTML
+}
+
+exports.genDespList = function(pessoas, desporto, data){
+    console.log("Desporto: " + desporto)
+    var pagHTML = ` 
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8"/>
+            <title>About ${desporto}</title>
+            <link rel="stylesheet" type="text/css" href="w3.css"/>
+        </head>
+        <body>
+            <div class="w3-card-4">
+                <header class="w3-container w3-purple">
+                    <h1>Lista de Pessoas que praticam o desporto: ${desporto}</h1>
+                </header>
+
+                <div class="w3-container">
+                    <table class="w3-table-all">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Idade</th>
+                            <th>Sexo</th>
+                            <th>Cidade</th>
+                        </tr>
+    `
+
+    for(let i = 0; i < pessoas.length; i++){
+        if(desporto in pessoas[i].desportos){
+            pagHTML += `
+                        <tr>
+                            <td>${pessoas[i].id}</td>
+                            <td>
+                                <a href="/pessoas/${pessoas[i].id}">${pessoas[i].nome}</a>
+                            </td>
+                            <td>${pessoas[i].idade}</td>
+                            <td>${pessoas[i].sexo}</td>
+                            <td>${pessoas[i].morada.cidade}</td>
+                        </tr>
+            `
+        }
+    }
+
+    pagHTML += `
+                    </table>
+                </div>
+
+                <footer class="w3-container w3-blue">
+                    <h5>Generated in EngWeb2023 ${data}</h5>
+                </footer>
+            </div> 
+        </body>
+    </html>
+    `
+    return pagHTML
+}
+
+exports.genTop10Pro = function(pessoas, d){
+    profissoes = {}
+    
+    for(let i = 0; i < pessoas.length; i++){
+        if(pessoas[i].profissao in profissoes){
+            profissoes[pessoas[i].profissao] += 1
+        }else{
+            profissoes[pessoas[i].profissao] = 1
+        }
+    }
+
+    // Create items array
+    var items = Object.keys(profissoes).map(function(key) {
+        return [key, profissoes[key]];
+    });
+  
+    // Sort the array based on the second element
+    items.sort(function(first, second) {
+        return second[1] - first[1];
+    });
+  
+    items = items.slice(0, 10)
+
+    var pagHTML = ` 
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8"/>
+            <title>About Profissões</title>
+            <link rel="stylesheet" type="text/css" href="w3.css"/>
+        </head>
+        <body>
+            <div class="w3-card-4">
+                <header class="w3-container w3-purple">
+                    <h1>Top 10 profissões mais exercidas</h1>
+                </header>
+
+                <div class="w3-container">
+                    <table class="w3-table-all">
+                        <tr>
+                            <th>Profissão</th>
+                            <th>Quantidade</th>
+                        </tr>
+    `
+
+    for(let i = 0; i < items.length; i++){
+        pagHTML += `
+                    <tr>
+                        <td>${items[i][0]}</td>
+                        <td><a href="top10Pro/${items[i][0]}">${items[i][1]}</a></td>
+                    </tr>
+        `
+    }
+
+    pagHTML += `
+                    </table>
+                </div>
+                <footer class="w3-container w3-blue">
+                    <h5>Generated in EngWeb2023 ${d}</h5>
+                </footer>
+            </div> 
+        </body>
+    </html>
+    `
     return pagHTML
 }
