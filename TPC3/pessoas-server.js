@@ -72,32 +72,8 @@ http.createServer(function (req, res){
                 res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
                 res.end('<p>Erro na obtenção de dados: ' + erro + '</p>')
             })
-    }else if(req.url == "/pessoas/feminino"){
-        axios.get('http://localhost:3000/pessoas?sexo=feminino') 
-            .then(function(resp){
-                var pessoas = resp.data
-                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
-                res.end(myPages.genPeopleList(pessoas, d))
-            })
-            .catch(erro => {
-                console.log("Erro: " + erro)
-                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
-                res.end('<p>Erro na obtenção de dados: ' + erro + '</p>')
-            })
-    }else if(req.url == "/pessoas/masculino"){
-        axios.get('http://localhost:3000/pessoas?sexo=masculino') 
-            .then(function(resp){
-                var pessoas = resp.data
-                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
-                res.end(myPages.genPeopleList(pessoas, d))
-            })
-            .catch(erro => {
-                console.log("Erro: " + erro)
-                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
-                res.end('<p>Erro na obtenção de dados: ' + erro + '</p>')
-            })
-    }else if(req.url == "/pessoas/outro"){
-        axios.get('http://localhost:3000/pessoas?sexo=outro') 
+    }else if(req.url.match(/\/pessoas\/\w+/)){ // Para os sexos
+        axios.get('http://localhost:3000/pessoas?sexo=' + req.url.substring(9)) 
             .then(function(resp){
                 var pessoas = resp.data
                 res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
@@ -120,13 +96,17 @@ http.createServer(function (req, res){
                 res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
                 res.end('<p>Erro na obtenção de dados: ' + erro + '</p>')
             })
-    }else if(req.url.match(/\/distDesporto\/[\w\s]+/)){
+    }else if(req.url.match(/\/distDesporto\/[\w\s]+/)){ 
         axios.get('http://localhost:3000/pessoas') 
             .then(function(resp){
-                var pessoas = resp.data
                 var desporto = req.url.substring(14)
+                desporto = decodeURIComponent(desporto) 
+                console.log(desporto)
+                var pessoasDesp = resp.data.filter(function (pessoa){
+                    return pessoa.desportos.includes(desporto)
+                })
                 res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
-                res.end(myPages.genDespList(pessoas, desporto, d))
+                res.end(myPages.genPeopleList(pessoasDesp, d))
             })
             .catch(erro => {
                 console.log("Erro: " + erro)
