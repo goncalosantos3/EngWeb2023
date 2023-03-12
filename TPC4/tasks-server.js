@@ -87,6 +87,9 @@ var tasksServer = http.createServer(function (req, res) {
                 if(req.url == "/"){ // Inserção de uma nova task
                     collectRequestBodyData(req, result =>{
                         if(result){ // A informção do formulário foi corretamente extraída
+                            if(result.completed == undefined){ 
+                                result.completed = 0
+                            }
                             axios.post('http://localhost:3000/tasks', result)
                             .then(resp => {
                                 console.log(resp.data);
@@ -104,6 +107,32 @@ var tasksServer = http.createServer(function (req, res) {
                             res.end()
                         }
                     })
+                }else if(/\/edit\/[0-9]+/.test(req.url)){
+                    collectRequestBodyData(req, result => {
+                        if(result){
+                            if(result.completed == undefined){
+                                result.completed = 0
+                            }
+                            console.dir(result)
+                            axios.put('http://localhost:3000/tasks/' + result.id, result)
+                            .then(resp => {
+                                console.log(resp.data);
+                                res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                                // res.write(studentFormPage(d))
+                                res.write('<p>Registo alterado:' + JSON.stringify(resp.data) + '</p>')
+                                res.end('<a href="/">Go back to the home page</a>')
+                            }).catch(error => {
+                                console.log('Erro: ' + error);
+                                res.writeHead(500, {'Content-Type': 'text/html;charset=utf-8'})
+                                res.end(templates.errorPage('<p>Unable to change record...</p>', d))
+                            });
+                        }
+                        else{
+                            res.writeHead(201, {'Content-Type': 'text/html;charset=utf-8'})
+                            res.write("<p>Unable to collect data from body...</p>")
+                            res.end()
+                        }
+                    })
                 }
                 break
             default: 
@@ -111,8 +140,7 @@ var tasksServer = http.createServer(function (req, res) {
                 res.write("<p>" + req.method + " unsupported in this server.</p>")
                 res.end()
         }
-    }
-    
+    }  
 })
 
 tasksServer.listen(7777, ()=>{

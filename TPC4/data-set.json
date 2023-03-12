@@ -15,13 +15,6 @@
   ],
   "tasks": [
     {
-      "id": 4,
-      "author": 1,
-      "date": "11-03-2023",
-      "desc": "Comprar pão",
-      "completed": 0
-    },
-    {
       "id": 5,
       "author": 2,
       "date": "23-03-2023",
@@ -30,10 +23,17 @@
     },
     {
       "id": 6,
-      "author": 3,
+      "author": "3",
       "date": "10-12-2023",
       "desc": "Comprar bacalhau",
-      "completed": 1
+      "completed": 0
+    },
+    {
+      "id": "7",
+      "author": "Eu",
+      "date": "Amanha",
+      "desc": "Cagar",
+      "completed": "1"
     }
   ]
 }
