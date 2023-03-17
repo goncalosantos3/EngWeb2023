@@ -1,0 +1,45 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "Name": "Gonçalo Martins dos Santos"
+    },
+    {
+      "id": 2,
+      "Name": "Gonçalo Braga"
+    },
+    {
+      "id": 3,
+      "Name": "Sica Clash PT"
+    }
+  ],
+  "tasks": [
+    {
+      "id": 5,
+      "author": "2",
+      "date": "23-03-2023",
+      "desc": "Dar banho ao peixe",
+      "completed": "1"
+    },
+    {
+      "id": 6,
+      "author": "3",
+      "date": "10-12-2023",
+      "desc": "Comprar bacalhau",
+      "completed": "1"
+    },
+    {
+      "id": "7",
+      "author": "Eu",
+      "date": "Amanha",
+      "desc": "Cagar"
+    },
+    {
+      "id": "8",
+      "author": "Eu",
+      "date": "Amanha",
+      "desc": "Mijar",
+      "completed": "1"
+    }
+  ]
+}
