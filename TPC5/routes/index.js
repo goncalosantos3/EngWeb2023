@@ -52,7 +52,7 @@ router.get('/tasks/delete/:idTask/confirm', function(req, res, next) {
   var data = new Date().toISOString().substring(0, 16)
   Task.deleteTask(req.params.idTask)
     .then(resp => {
-      res.redirect('/')
+      res.render('taskDeleted.pug')
     })
     .catch(erro => {
       res.render('error', {error: erro, message: "Erro ao eliminar o registo da task"})
