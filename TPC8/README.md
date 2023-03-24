@@ -1,1 +1,0 @@
-# Diretoria do TPC 8
