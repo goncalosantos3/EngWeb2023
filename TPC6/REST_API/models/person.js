@@ -42,4 +42,4 @@ var personSchema = new mongoose.Schema({
     id: String
 })
 
-module.exports = mongoose.model('people', personSchema)
+module.exports = mongoose.model("people", personSchema, "people")

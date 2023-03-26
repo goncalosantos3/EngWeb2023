@@ -42,7 +42,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.status(404).json({erro: err, message: "Pedido não suportado!"});
 });
 
 module.exports = app;

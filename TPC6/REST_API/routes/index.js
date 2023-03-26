@@ -12,13 +12,17 @@ router.get('/people', function(req, res) {
 
 router.get('/people/:id', (req,res) => {
   Person.getPerson(req.params.id)
-    .then(dados => res.status(200).json(dados))
+    .then(dados => {
+      console.dir(dados)
+      res.status(200).json(dados)
+    })
     .catch(erro => res.status(521).json({erro: erro, message: "Não consegui obter o registo da pessoa!"}))
 })
 
 /* --------------------------------------- POST ---------------------------------------------- */
 
 router.post('/people', (req, res) => {
+  console.log("vou inserir")
   Person.addPerson(req.body)
     .then(dados => res.status(201).json(dados))
     .catch(erro => res.status(522).json({erro: erro, message: "Não consegui inserir o registo da pessoa!"}))

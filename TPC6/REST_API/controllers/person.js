@@ -22,6 +22,7 @@ module.exports.getPerson = id => {
 }
 
 module.exports.addPerson = p => {
+    console.dir(p)
     return Person.create(p)
         .then(resposta => {
             return resposta
